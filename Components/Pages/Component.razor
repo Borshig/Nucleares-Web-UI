@@ -1,11 +1,13 @@
 ﻿@page "/core"
+@rendermode InteractiveServer
+
+
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
 <PageTitle>Home</PageTitle>
 
-<MudMenu Label = "Menu">
-    <MudMenuItem Label = "Home" Href = "/"/>
-    <MudMenuItem Label = "Core" Href = "/core"/>
-    <MudMenuItem Label = "WIP" Href = "/WIP"/>
-</MudMenu>'
 <MudPaper Class = "pa-4">
     <MudChart ChartType = "ChartType.HeatMap" ChartSeries = "@_series" ChartOption="@_option"
     ChartLabels = "@_xlabels" Width="100%" Height="350px"></MudChart>
@@ -19,10 +21,10 @@
     private string[] _xlabels = [];
     private List<ChartSeries<double>> _series = new List<ChartSeries<double>>();
 
-    private async void HeatMapDataSet()
+    public void HeatMapDataSet()
     {
         var data = new Dictionary<string, string>();
-        data = await NuclearesGETData.Programs.Second();
+        data = NuclearesGETData.Programs.Second();
 
         string[] rodBankPos = ["ROD_BANK_POS_0_ACTUAL", "ROD_BANK_POS_1_ACTUAL", "ROD_BANK_POS_2_ACTUAL", "ROD_BANK_POS_3_ACTUAL", "ROD_BANK_POS_4_ACTUAL", "ROD_BANK_POS_5_ACTUAL", "ROD_BANK_POS_6_ACTUAL", "ROD_BANK_POS_7_ACTUAL", "ROD_BANK_POS_8_ACTUAL"];
         string[] coreTemperature = ["CORE_FUEL_1_TEMPERATURE","CORE_FUEL_2_TEMPERATURE","CORE_FUEL_3_TEMPERATURE","CORE_FUEL_4_TEMPERATURE","CORE_FUEL_5_TEMPERATURE","CORE_FUEL_6_TEMPERATURE","CORE_FUEL_7_TEMPERATURE","CORE_FUEL_8_TEMPERATURE","CORE_FUEL_9_TEMPERATURE",];

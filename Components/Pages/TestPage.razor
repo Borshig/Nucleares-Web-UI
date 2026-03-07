@@ -1,0 +1,164 @@
+﻿@page "/test"
+@rendermode InteractiveServer
+@inject ISnackbar SnackbarService
+
+
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-10">
+    <MudText Typo="Typo.h4" GutterBottom="true">Песочница MudBlazor</MudText>
+
+    <MudGrid>
+        @* Кнопки и прогресс *@
+        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Интерактив</MudText>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Increment" Class="mt-2">
+                    Нажми меня: @count
+                </MudButton>
+
+                <MudProgressLinear Color="Color.Info" Value="@progressBar" Class="my-4" />
+                <MudProgressCircular Color="Color.Success" Indeterminate="isLoading" Size="Size.Small" />
+                <MudText Typo="Typo.caption" Class="ml-2">Загрузка...</MudText>
+            </MudPaper>
+        </MudItem>
+
+        @* Слайдеры и переключатели *@
+        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Управление</MudText>
+                <MudSlider @bind-Value="progressSlider" Min="0" Max="100" Color="Color.Secondary">
+                    Прогресс: @progressSlider%
+                </MudSlider>
+
+                <MudSwitch @bind-Value="isLoading" Label="Включить спиннер" OnClick="SwitchS" Color="Color.Primary" />
+                <MudCheckBox @bind-Value="isDark" Label="Темная тема (имитация)" OnClick="SwitchB" Color="Color.Info" />
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-4">            
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OnClickSnack">Show a RenderFragment snackbar</MudButton>
+                <MudAlert Severity="Severity.Normal" Variant="Variant.Filled" Dense="true" Class="my-2" Elevation="10">Dense Default</MudAlert>
+                <MudAlert Severity="Severity.Info" Variant="Variant.Filled" Dense="true" Class="my-2">Dense Info</MudAlert>
+                <MudAlert Severity="Severity.Success" Variant="Variant.Filled" Dense="true" Class="my-2">Dense Success</MudAlert>
+                <MudAlert Severity="Severity.Warning" Variant="Variant.Filled" Dense="true" Class="my-2">Dense Warning</MudAlert>
+                <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Dense="true" Class="my-2">Dense Error</MudAlert>
+
+                <MudButton OnClick="AddAlert" Variant="Variant.Outlined" Class="mb-4">
+                    Добавить уведомление
+                </MudButton>
+
+                @foreach (var alert in _alerts)
+                {
+                    @if (showCallAlert)
+                    {
+                         <MudAlert Severity="Severity.Warning"
+                             Variant="Variant.Filled"
+                             Class="my-2"
+                             ShowCloseIcon="true"
+                             CloseIcon="@Icons.Material.Filled.Close"
+                                  CloseIconClicked="(() => CloseMe(false))">
+                                 Уведомление номер @alert
+                         </MudAlert>
+                    }
+                }      
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-4">
+             
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@code {
+    private int count = 0;
+    private double progressBar = 10;
+    private double progressSlider = 10;
+    private bool isLoading = true;
+    private bool isDark = true;
+
+    private void Increment()
+    {
+        count++;   
+        if (progressBar < 100) progressBar += 5;
+    }
+
+    private void IncrementProgress()
+    {
+        if (progressBar < 100) progressBar += 5;
+    }
+
+    private void IncrementSlider()
+    {
+        if (progressSlider < 100) progressSlider += 5;
+    }
+
+    private void SwitchS()
+    {       
+        isLoading = !isLoading;
+    }
+
+    private void SwitchB()
+    {
+        isDark = !isDark;
+    }
+
+    private void OnClickSnack()
+    {
+        SnackbarService.Add
+        (
+            @<div>
+                <h3>Hi from a RenderFragment</h3>
+                    <ul>
+                        <li>Here's a regular item</li>
+                        <li>Here's a <strong>bold item</strong></li>
+                        <li>Here's an <em>italicized item</em></li>
+                    </ul>
+            </div>
+        );
+
+        var a = new MudAlert();
+    }
+
+    private List<int> _alerts = new();
+    private int _counter = 0;
+
+    private void AddAlert()
+    {
+        _counter++;
+        _alerts.Add(_counter); // Добавляем данные в список — Blazor видит изменения
+    }
+
+    private void RemoveAlert(int id)
+    {
+        _alerts.Remove(id);
+    }
+
+    private bool showCallAlert = true;
+    private bool showLeaveAlert = true;
+
+    private void CloseMe(bool value)
+    {
+        if (value)
+        {
+            showLeaveAlert = false;
+        }
+        else
+        {
+            showCallAlert = false;
+        }
+    }
+
+    private void ShowAlerts()
+    {
+        showCallAlert = true;
+        showLeaveAlert = true;
+    }
+}
