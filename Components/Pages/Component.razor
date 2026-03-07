@@ -1,6 +1,6 @@
 ﻿@page "/core"
 @rendermode InteractiveServer
-
+@implements IDisposable
 
 <MudPopoverProvider />
 <MudDialogProvider />
@@ -14,12 +14,48 @@
 </MudPaper>
 <MudButton Variant="Variant.Filled" OnClick = "HeatMapDataSet">Update</MudButton>
 
-
 @code {
     private static string[] colors = ["#FFFFFF","#00BFFF","#5AC8FA", "#34C759", "#007AFF", "#FFCC00", "#e03131"];
     private ChartOptions _option = new ChartOptions{ChartPalette = colors};
     private string[] _xlabels = [];
     private List<ChartSeries<double>> _series = new List<ChartSeries<double>>();
+
+    private CancellationTokenSource _cts = new();
+
+    protected override void OnInitialized()
+    {
+        // Запускаем фоновую задачу без ожидания (fire-and-forget)
+        _ = BackgroundLoop(_cts.Token);
+    }
+
+    private async Task BackgroundLoop(CancellationToken ct)
+    {
+        try
+        {
+            while (!ct.IsCancellationRequested)
+            {
+
+                HeatMapDataSet();
+
+                // Обязательно уведомляем UI об изменениях
+                await InvokeAsync(StateHasChanged);
+
+                // Задержка, чтобы не вешать поток
+                await Task.Delay(1000, ct);
+            }
+        }
+        catch (TaskCanceledException)
+        {
+            // Нормальное завершение при закрытии страницы
+        }
+    }
+
+    // Остановка цикла при уничтожении компонента
+    public void Dispose()
+    {
+        _cts.Cancel();
+        _cts.Dispose();
+    }
 
     public void HeatMapDataSet()
     {
@@ -28,27 +64,35 @@
 
         string[] rodBankPos = ["ROD_BANK_POS_0_ACTUAL", "ROD_BANK_POS_1_ACTUAL", "ROD_BANK_POS_2_ACTUAL", "ROD_BANK_POS_3_ACTUAL", "ROD_BANK_POS_4_ACTUAL", "ROD_BANK_POS_5_ACTUAL", "ROD_BANK_POS_6_ACTUAL", "ROD_BANK_POS_7_ACTUAL", "ROD_BANK_POS_8_ACTUAL"];
         string[] coreTemperature = ["CORE_FUEL_1_TEMPERATURE","CORE_FUEL_2_TEMPERATURE","CORE_FUEL_3_TEMPERATURE","CORE_FUEL_4_TEMPERATURE","CORE_FUEL_5_TEMPERATURE","CORE_FUEL_6_TEMPERATURE","CORE_FUEL_7_TEMPERATURE","CORE_FUEL_8_TEMPERATURE","CORE_FUEL_9_TEMPERATURE",];
-        string[] xaxis = ["Row 1", "Row 2", "Row 3", "Row 4", "Row 5", "Row 6", "Row 7", "Row 8", "Row 9"];
+        string[] xaxis = ["ROD 1", "ROD 2", "ROD 3", "ROD 4", "ROD 5", "ROD 6", "ROD 7", "ROD 8", "ROD 9"];
 
         var heatMapSeries = new List<ChartSeries<double>>();
         var dataPoints = xaxis.Length;
         var datas = new double[dataPoints];
         var data2 = new double[dataPoints];
 
-        for (int i = 0; i < 1;)
+
+        //datas[i] = Math.Round(Random.Shared.NextDouble() * 100, 2);
+      
+        //      (Math.Round(, 2)
+   
+        for (int i = 0; i < 1; i++)
         {
-            datas[i] = Convert.ToDouble(data[coreTemperature[i]]);
+          
+
             heatMapSeries.Add(new ChartSeries<double> { Name = "Температура Стержней", Data = datas });
             if (data[rodBankPos[i]] != "null")
             {
-                data2[i] = Convert.ToDouble(data[rodBankPos[i]]);
+
+                data2[i] = Math.Round(Convert.ToDouble(data[rodBankPos[i]]), 2);
+                datas[i] = Math.Round(Convert.ToDouble(data[coreTemperature[i]]), 2);
             }
             else 
             {
-                data2[i] = 0d;
+                data2[i] = 0f;
             }
-            i++;
-            heatMapSeries.Add(new ChartSeries<double> { Name = "Позиция стержней", Data = data2, TooltipYValueFormat = "1"});
+            
+        heatMapSeries.Add(new ChartSeries<double> { Name = "Позиция стержней", Data = data2, TooltipYValueFormat = "1" });
         }
         _xlabels = xaxis;
         _series = heatMapSeries;

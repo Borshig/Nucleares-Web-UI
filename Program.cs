@@ -45,7 +45,7 @@ namespace NuclearesGETData
 
         public static Dictionary<string, string> Second()
         {
-            var rawRoot = httpClient.GetFromJsonAsync<Root>("http://localhost:8785/?variable=WEBSERVER_LIST_VARIABLES_JSON").Result;
+            var rawRoot = httpClient.GetFromJsonAsync<Root>("http://host.docker.internal:8785/?variable=WEBSERVER_LIST_VARIABLES_JSON").Result;
 
             var result = new Dictionary<string, string>();
 
@@ -58,7 +58,7 @@ namespace NuclearesGETData
                     string suffix = variable.Substring(variable.LastIndexOf("_") + 1);
                     if (!exclude.Contains(suffix))
                     {
-                        string variableData = httpClient.GetStringAsync($"http://localhost:8785/?variable={variable}").Result;
+                        string variableData = httpClient.GetStringAsync($"http://host.docker.internal:8785/?variable={variable}").Result;
                         result[variable] = variableData;
                     }
                 }
