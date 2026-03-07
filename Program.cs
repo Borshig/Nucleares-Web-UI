@@ -65,7 +65,7 @@ namespace NuclearesGETData
                         if (!exclude.Contains(suffix))
                         {
                             string variableData = httpClient.GetStringAsync($"http://host.docker.internal:8785/?variable={variable}").Result;
-                            result[variable] = variableData;
+                            result[variable] = variableData.Replace(',','.');
                         }
                     }
                 }
