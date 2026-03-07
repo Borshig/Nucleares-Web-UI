@@ -1,0 +1,105 @@
+﻿@page "/test2"
+@inject ISnackbar Snackbar
+@using System.Net.Http.Json
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-8">
+
+    @* БЛОК 1: ВВОД И API *@
+    <MudPaper Class="pa-4 mb-6" Elevation="3">
+        <MudText Typo="Typo.h6">Запрос к API</MudText>
+        <div class="d-flex align-center gap-4 mt-2">
+            <MudTextField @bind-Value="_searchQuery"
+                          Label="Введите поисковый запрос"
+                          Variant="Variant.Outlined"
+                          Margin="Margin.Dense" />
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       OnClick="HandleApiCall"
+                       StartIcon="@Icons.Material.Filled.Send">
+                Отправить
+            </MudButton>
+        </div>
+    </MudPaper>
+
+    @* БЛОК 2: DATAGRID *@
+    <MudDataGrid Items="@_users" Filterable="true" SortMode="SortMode.Multiple" QuickFilter="_quickFilter">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Пользователи (DataGrid)</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString" Placeholder="Быстрый поиск..."
+                          Adornment="Adornment.Start" Immediate="true"
+                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" />
+        </ToolBarContent>
+        <Columns>
+            <PropertyColumn Property="x => x.Id" Title="ID" Filterable="false" />
+            <PropertyColumn Property="x => x.Name" Title="Имя" />
+            <PropertyColumn Property="x => x.Email" Title="Эл. почта" />
+            <PropertyColumn Property="x => x.Role" Title="Роль" />
+            <TemplateColumn Title="Действия">
+                <CellTemplate>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" />
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="User" />
+        </PagerContent>
+    </MudDataGrid>
+
+</MudContainer>
+
+@code {
+    private string _searchQuery = "";
+    private string _searchString = "";
+    private List<User> _users = new();
+
+    // Модель данных
+    public record User(int Id, string Name, string Email, string Role);
+
+    protected override void OnInitialized()
+    {
+        // Тестовые данные для таблицы
+        _users = new List<User>
+        {
+            new(1, "Иван Иванов", "ivan@test.com", "Admin"),
+            new(2, "Анна Сидорова", "anna@test.com", "User"),
+            new(3, "Петр Петров", "pete@test.com", "Editor"),
+            new(4, "Мария Смирнова", "mary@test.com", "User"),
+        };
+    }
+
+    // Логика вызова API (имитация)
+    private async Task HandleApiCall()
+    {
+        if (string.IsNullOrWhiteSpace(_searchQuery))
+        {
+            // Пример Snackbar (Ошибка)
+            //Snackbar.Add("Поле ввода пустое!", Severity.Warning);
+            return;
+        }
+
+        try
+        {
+            // Имитируем запрос к бэкенду
+            await Task.Delay(500);
+
+            // Пример Snackbar (Успех)
+            //Snackbar.Add($"Запрос '{_searchQuery}' успешно отправлен!", Severity.Success);
+            _searchQuery = ""; // Очистка
+        }
+        catch (Exception ex)
+        {
+            //Snackbar.Add("Ошибка при обращении к серверу", Severity.Error);
+        }
+    }
+
+    // Быстрый фильтр для DataGrid
+    private Func<User, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString)) return true;
+        if (x.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase)) return true;
+        if (x.Role.Contains(_searchString, StringComparison.OrdinalIgnoreCase)) return true;
+        return false;
+    };
+}
