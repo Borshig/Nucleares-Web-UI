@@ -41,30 +41,58 @@ namespace NuclearesGETData
 {
     public class Programs
     {
+
         static HttpClient httpClient = new HttpClient();
+
+
 
         public static Dictionary<string, string> Second()
         {
-            var rawRoot = httpClient.GetFromJsonAsync<Root>("http://host.docker.internal:8785/?variable=WEBSERVER_LIST_VARIABLES_JSON").Result;
 
             var result = new Dictionary<string, string>();
 
-            if (rawRoot != null)
+            try
             {
-                string[] exclude = { "JSON", "VARIABLES", "GET", "HTML" };
+                var rawRoot = httpClient.GetFromJsonAsync<Root>("http://host.docker.internal:8785/?variable=WEBSERVER_LIST_VARIABLES_JSON").Result;
 
-                foreach (var variable in rawRoot.GET)
+                if (rawRoot != null)
                 {
-                    string suffix = variable.Substring(variable.LastIndexOf("_") + 1);
-                    if (!exclude.Contains(suffix))
+                    string[] exclude = { "JSON", "VARIABLES", "GET", "HTML" };
+
+                    foreach (var variable in rawRoot.GET)
                     {
-                        string variableData = httpClient.GetStringAsync($"http://host.docker.internal:8785/?variable={variable}").Result;
-                        result[variable] = variableData;
+                        string suffix = variable.Substring(variable.LastIndexOf("_") + 1);
+                        if (!exclude.Contains(suffix))
+                        {
+                            string variableData = httpClient.GetStringAsync($"http://host.docker.internal:8785/?variable={variable}").Result;
+                            result[variable] = variableData;
+                        }
                     }
                 }
+            }                           
+            catch(System.AggregateException ex)
+            {
+               Console.WriteLine(ex.Message); // 
             }
+            catch(System.InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch(System.Net.Http.HttpRequestException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch(System.OperationCanceledException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+
+
             //var heatMapSeries = new List<ChartSeries<double>>();
             //heatMapSeries.Add(new ChartSeries<double> { TooltipYValueFormat = "2" });
+
+
             return result;
 
         }
