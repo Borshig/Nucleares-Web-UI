@@ -1,0 +1,55 @@
+﻿@page "/core"
+<PageTitle>Home</PageTitle>
+
+<MudMenu Label = "Menu">
+    <MudMenuItem Label = "Home" Href = "/"/>
+    <MudMenuItem Label = "Core" Href = "/core"/>
+    <MudMenuItem Label = "WIP" Href = "/WIP"/>
+</MudMenu>'
+<MudPaper Class = "pa-4">
+    <MudChart ChartType = "ChartType.HeatMap" ChartSeries = "@_series" ChartOption="@_option"
+    ChartLabels = "@_xlabels" Width="100%" Height="350px"></MudChart>
+</MudPaper>
+<MudButton Variant="Variant.Filled" OnClick = "HeatMapDataSet">Update</MudButton>
+
+
+@code {
+    private static string[] colors = ["#FFFFFF","#00BFFF","#5AC8FA", "#34C759", "#007AFF", "#FFCC00", "#e03131"];
+    private ChartOptions _option = new ChartOptions{ChartPalette = colors};
+    private string[] _xlabels = [];
+    private List<ChartSeries<double>> _series = new List<ChartSeries<double>>();
+
+    private async void HeatMapDataSet()
+    {
+        var data = new Dictionary<string, string>();
+        data = await NuclearesGETData.Programs.Second();
+
+        string[] rodBankPos = ["ROD_BANK_POS_0_ACTUAL", "ROD_BANK_POS_1_ACTUAL", "ROD_BANK_POS_2_ACTUAL", "ROD_BANK_POS_3_ACTUAL", "ROD_BANK_POS_4_ACTUAL", "ROD_BANK_POS_5_ACTUAL", "ROD_BANK_POS_6_ACTUAL", "ROD_BANK_POS_7_ACTUAL", "ROD_BANK_POS_8_ACTUAL"];
+        string[] coreTemperature = ["CORE_FUEL_1_TEMPERATURE","CORE_FUEL_2_TEMPERATURE","CORE_FUEL_3_TEMPERATURE","CORE_FUEL_4_TEMPERATURE","CORE_FUEL_5_TEMPERATURE","CORE_FUEL_6_TEMPERATURE","CORE_FUEL_7_TEMPERATURE","CORE_FUEL_8_TEMPERATURE","CORE_FUEL_9_TEMPERATURE",];
+        string[] xaxis = ["Row 1", "Row 2", "Row 3", "Row 4", "Row 5", "Row 6", "Row 7", "Row 8", "Row 9"];
+
+        var heatMapSeries = new List<ChartSeries<double>>();
+        var dataPoints = xaxis.Length;
+        var datas = new double[dataPoints];
+        var data2 = new double[dataPoints];
+
+        for (int i = 0; i < 1;)
+        {
+            datas[i] = Convert.ToDouble(data[coreTemperature[i]]);
+            heatMapSeries.Add(new ChartSeries<double> { Name = "Температура Стержней", Data = datas });
+            if (data[rodBankPos[i]] != "null")
+            {
+                data2[i] = Convert.ToDouble(data[rodBankPos[i]]);
+            }
+            else 
+            {
+                data2[i] = 0d;
+            }
+            i++;
+            heatMapSeries.Add(new ChartSeries<double> { Name = "Позиция стержней", Data = data2, TooltipYValueFormat = "1"});
+        }
+        _xlabels = xaxis;
+        _series = heatMapSeries;
+    }
+
+}
