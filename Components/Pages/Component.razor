@@ -34,7 +34,7 @@
                  Severity.Success
             );
         }
-    }
+}
 
 
 
@@ -44,31 +44,54 @@
         <MudAlert Severity="Severity.Warning">The reactor temperature exceeds the optimal range</MudAlert>
         <MudAlert Severity="Severity.Error">Meltdown is imminent</MudAlert>
     </MudPaper>
-
-<MudPaper Class="pa-4">
-    @if (isLoading)
-    {
-        <MudProgressCircular Color="Color.Success" Indeterminate="isLoading" Size="Size.Small" />
-        <MudText Typo="Typo.caption" Class="ml-2">Ожидание данных от веб сервера...</MudText>
-    }
-    <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-16">Температура стержней реактора</MudText>
-    <MudChart ChartType="ChartType.HeatMap" ChartSeries="@_seriesСoreTemp" ChartOption="@_option"
-     ChartLabels = "@_xlabels" Width="100%" Height="280px"></MudChart>
-</MudPaper>
-
-<MudPaper Class="pa-4">
-    <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-16">Позиция стержней реактора</MudText>
-    <MudChart ChartType="ChartType.HeatMap" ChartSeries="@_seriesPosBank" ChartOption="@_option"
-     ChartLabels="@_xlabels" Width="100%" Height="280px"></MudChart>
-</MudPaper>
+<MudStack Row="true">
+    <MudPaper Class="pa-4" MaxHeight="100%">
+        @if (isLoading)
+        {
+            <MudProgressCircular Color="Color.Success" Indeterminate="isLoading" Size="Size.Small" />
+            <MudText Typo="Typo.caption" Class="ml-2">Ожидание данных от веб сервера...</MudText>
+        }
+        <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-16">Температура стержней реактора</MudText>
+        <MudChart ChartType="ChartType.HeatMap" ChartSeries="@_seriesСoreTemp" ChartOptions="@_option"
+                  ChartLabels="@_xlabels" Width="100%" Height="380px">
+            <MudHeatMapCell Row="0" Column="0" MinValue="140" MaxValue="430" />
+        </MudChart>
+    </MudPaper>
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-16">Позиция стержней реактора</MudText>
+        <MudChart ChartType="ChartType.HeatMap" ChartSeries="@_seriesPosBank" ChartOptions="@_option"
+                  ChartLabels="@_xlabels" Width="100%" Height="380px">
+            <MudHeatMapCell Row="0" Column="0" MinValue="0" MaxValue="100" />
+        </MudChart>
+    </MudPaper>
+</MudStack>
+<MudStack Row="true">
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-16">Прочность ядерного топлива</MudText>
+        <MudChart ChartType="ChartType.HeatMap" ChartSeries="@_seriesFuelWear" ChartOptions="@_option"
+                  ChartLabels="@_xlabels" Width="100%" Height="380px">
+            <MudHeatMapCell Row="0" Column="0" MinValue="0" MaxValue="100" />
+        </MudChart>
+    </MudPaper>
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-16">Эффективность выработки тепла</MudText>
+        <MudChart ChartType="ChartType.HeatMap" ChartSeries="@_seriesGenerationHeatEfficiency" ChartOptions="@_option"
+                  ChartLabels="@_xlabels" Width="100%" Height="380px">
+            <MudHeatMapCell Row="0" Column="0" MinValue="0" MaxValue="100" />
+        </MudChart>
+    </MudPaper>
+</MudStack>
 
 @code {
     private bool isLoading = true;
-    private static string[] colors = ["#FFFFFF","#00BFFF","#5AC8FA", "#34C759", "#007AFF", "#FFCC00", "#e03131"];
-    private ChartOptions _option = new ChartOptions{ChartPalette = colors};
+    //private readonly string[] colors = ["#007AFF", "#5AC8FA", "#00F2A9", "#00C735", "#FFFF00", "#FFCC00", "#FF0000"];
+    private readonly string[] colors = ["#007AFF", "#5AC8FA", "#00C735", "#FFCC00", "#FF0000"];
+    private HeatMapChartOptions _option = new HeatMapChartOptions { };
     private string[] _xlabels = [];
     private List<ChartSeries<double>> _seriesСoreTemp = new List<ChartSeries<double>>();
     private List<ChartSeries<double>> _seriesPosBank = new List<ChartSeries<double>>();
+    private List<ChartSeries<double>> _seriesFuelWear = new List<ChartSeries<double>>();
+    private List<ChartSeries<double>> _seriesGenerationHeatEfficiency = new List<ChartSeries<double>>();
 
     private CancellationTokenSource _cts = new();
 
@@ -76,8 +99,18 @@
     {
         // Запускаем фоновую задачу без ожидания (fire-and-forget)
         _ = BackgroundLoop(_cts.Token);
+        BuildOptions();
     }
 
+    private void BuildOptions()
+    {
+        var options = new HeatMapChartOptions
+        {
+            ShowToolTips = true,
+            ChartPalette = colors.Take(colors.Length).ToArray(),
+        };
+        _option = options;
+    }
     private async Task BackgroundLoop(CancellationToken ct)
     {
         try
@@ -121,15 +154,23 @@
         isLoading = false;
 
         string[] rodBankPos = ["ROD_BANK_POS_0_ACTUAL", "ROD_BANK_POS_1_ACTUAL", "ROD_BANK_POS_2_ACTUAL", "ROD_BANK_POS_3_ACTUAL", "ROD_BANK_POS_4_ACTUAL", "ROD_BANK_POS_5_ACTUAL", "ROD_BANK_POS_6_ACTUAL", "ROD_BANK_POS_7_ACTUAL", "ROD_BANK_POS_8_ACTUAL"];
-        string[] coreTemp = ["CORE_FUEL_1_TEMPERATURE","CORE_FUEL_2_TEMPERATURE","CORE_FUEL_3_TEMPERATURE","CORE_FUEL_4_TEMPERATURE","CORE_FUEL_5_TEMPERATURE","CORE_FUEL_6_TEMPERATURE","CORE_FUEL_7_TEMPERATURE","CORE_FUEL_8_TEMPERATURE","CORE_FUEL_9_TEMPERATURE",];
+        string[] coreTemp = ["CORE_FUEL_1_TEMPERATURE","CORE_FUEL_2_TEMPERATURE","CORE_FUEL_3_TEMPERATURE","CORE_FUEL_4_TEMPERATURE","CORE_FUEL_5_TEMPERATURE","CORE_FUEL_6_TEMPERATURE","CORE_FUEL_7_TEMPERATURE","CORE_FUEL_8_TEMPERATURE","CORE_FUEL_9_TEMPERATURE"];
+        string[] FuelWear = ["CORE_FUEL_1_FISSIONABLE", "CORE_FUEL_2_FISSIONABLE", "CORE_FUEL_3_FISSIONABLE", "CORE_FUEL_4_FISSIONABLE", "CORE_FUEL_5_FISSIONABLE", "CORE_FUEL_6_FISSIONABLE", "CORE_FUEL_7_FISSIONABLE", "CORE_FUEL_8_FISSIONABLE", "CORE_FUEL_9_FISSIONABLE"];
+        string[] GenerationHeatEfficiency = ["CORE_FUEL_1_POWER_FACTOR", "CORE_FUEL_2_POWER_FACTOR", "CORE_FUEL_3_POWER_FACTOR", "CORE_FUEL_4_POWER_FACTOR", "CORE_FUEL_5_POWER_FACTOR", "CORE_FUEL_6_POWER_FACTOR", "CORE_FUEL_7_POWER_FACTOR", "CORE_FUEL_8_POWER_FACTOR", "CORE_FUEL_9_POWER_FACTOR"];
         //string[] xaxis2 = ["ROD 1", "ROD 2", "ROD 3", "ROD 4", "ROD 5", "ROD 6", "ROD 7", "ROD 8", "ROD 9"];
         string[] xAxis = [string.Empty, string.Empty, string.Empty];
 
         var heatMapSeriesCoreTemp = new List<ChartSeries<double>>();
         var heatMapSeriesPosBank = new List<ChartSeries<double>>();
+        var heatMapSeriesFuelWear = new List<ChartSeries<double>>();
+        var heatMapSeriesGenerationHeatEfficiency = new List<ChartSeries<double>>();
+
         var dataPoints = 3;
         var dataCoreTemp = new double[dataPoints];
         var dataBankPos = new double[dataPoints];
+        var dataFuelWear = new double[dataPoints];
+        var dataGenerationHeatEfficiency = new double[dataPoints];
+
         int[] indexPos =
         [8,1,2,
          7,0,3,
@@ -150,16 +191,22 @@
                 else
                 {
                     dataBankPos[i] = 0f;
-                    dataCoreTemp[i] = 0f;
                 }
                 dataCoreTemp[i] = Math.Round(Convert.ToDouble(data[coreTemp[index]]), 2);
+                dataFuelWear[i] = Math.Round(Convert.ToDouble(data[FuelWear[index]]), 2);
+                dataGenerationHeatEfficiency[i] = Math.Round(Convert.ToDouble(data[GenerationHeatEfficiency[index]]), 2);
             }
             heatMapSeriesCoreTemp.Add(new ChartSeries<double> { Name = x, Data = dataCoreTemp });
             heatMapSeriesPosBank.Add(new ChartSeries<double> { Name = x, Data = dataBankPos });
+            heatMapSeriesFuelWear.Add(new ChartSeries<double> { Name = x, Data = dataFuelWear });
+            heatMapSeriesGenerationHeatEfficiency.Add(new ChartSeries<double> { Name = x, Data = dataGenerationHeatEfficiency });
         } //"Температура Стержней""Позиция стержней"
         _xlabels = xAxis;
         _seriesСoreTemp = heatMapSeriesCoreTemp;
         _seriesPosBank = heatMapSeriesPosBank;
+        _seriesFuelWear = heatMapSeriesFuelWear;
+        _seriesGenerationHeatEfficiency = heatMapSeriesGenerationHeatEfficiency;
+        BuildOptions();
     }
-
+    
 }
