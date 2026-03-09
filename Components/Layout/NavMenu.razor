@@ -1,11 +1,33 @@
-﻿
-<MudNavMenu>
-    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>    
-    <MudNavLink Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Weather</MudNavLink>
-    <MudNavLink Href="test" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.PermScanWifi">TestPage</MudNavLink>
-    <MudNavLink Href="core" Match="NavLinkMatch.Prefix" Icon="@Icons.Custom.Uncategorized.Radioactive" Color="Color.Warning">core</MudNavLink>
-
-</MudNavMenu>
+﻿@rendermode InteractiveServer
 
 
+<MudLayout> 
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer"/>
+    </MudAppBar>
+    
+    <MudDrawer @bind-Open="@_openMenu" Elevation="1">
+        
+        <MudNavMenu Wid>
+            <MudText Typo="Typo.h6">Menu</MudText>
+            
+            <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+            <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>    
+            <MudNavLink Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Weather</MudNavLink>
+            <MudNavLink Href="test" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.PermScanWifi">TestPage</MudNavLink>
+            <MudNavLink Href="core" Match="NavLinkMatch.Prefix" Icon="@Icons.Custom.Uncategorized.Radioactive" Color="Color.Warning">Core</MudNavLink>
+        
+        </MudNavMenu>
+    </MudDrawer>
+</MudLayout> 
+
+
+@code
+{
+    public bool _openMenu = true;
+
+    public void ToggleDrawer()
+    {
+        _openMenu = !_openMenu;
+    }
+}
