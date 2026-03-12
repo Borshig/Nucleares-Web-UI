@@ -6,24 +6,23 @@
 
 <MudStack Row="true" Wrap="Wrap.Wrap" Spacing="4" Justify="Justify.Center">
     <AnalogGauge Value="@_rpm" MinValue="0" MaxValue="100" Unit="RPM" NeedleColor="#ffbb44" Size="100px" BorderColor="#ffff44" TextColor="#FF0000" TextTypo="Typo.h5" Format="F1"></AnalogGauge>
-    <AnalogGauge Value="@_rpm" MinValue="0" MaxValue="360" NeedleColor="#ffff44" Size="300px" BackgroundColor="#003F00" TickColor="#000000" TextTypo="Typo.h2" PosTextX="50" PosTextY="20" Format="F2"></AnalogGauge>
+    <AnalogGauge Value="@_rpm" MinValue="0" MaxValue="360" NeedleColor="#ffff44" Size="300px" ImageBase64="@image" BackgroundColor="#FF0000" TickColor="#000000" TextTypo="Typo.h2" PosTextX="50" PosTextY="20" Format="F2"></AnalogGauge>
     <AnalogGauge Value="@_rpm" MinValue="0" MaxValue="100" Unit="RPM" NeedleColor="#ffbb44" Size="100px" BorderColor="#ffff44" TextColor="#FF0000" TextTypo="Typo.h5" Format="F1"></AnalogGauge>
     <AnalogGauge Value="@_rpm" MinValue="0" MaxValue="360" NeedleColor="#ffff44" Size="300px" BackgroundColor="#003F00" TickColor="#000000" TextTypo="Typo.h2" PosTextX="50" PosTextY="20" Format="F2"></AnalogGauge>
 </MudStack>
 <MudSlider @bind-Value="@_rpm" Max="1000">RPM</MudSlider>
 <MudButton OnClick="StartAnimation">Animation</MudButton>
 @code {
-    public string image = "";
     public double _rpm = 0; 
     public double animatiomStep = 2.11;
-  
+    public string image = "";
     private async Task StartAnimation()
     { 
         for (double i = 0; i <= 500; i += animatiomStep)
         {
             _rpm = i;
             StateHasChanged();
-            await Task.Delay(10); // 10ms * 100 = 1 секунда
+            await Task.Delay(10);
         }
         for (double i = 500; i >= 0; i -= animatiomStep)
         {
@@ -32,5 +31,10 @@
             await Task.Delay(10);
         }
         _rpm = 0;
+    }
+
+    protected override void OnInitialized()
+    {
+       image = Components.Helper.ConverterImageToBase64(@"Content/Image/Dial1.png");
     }
 }
