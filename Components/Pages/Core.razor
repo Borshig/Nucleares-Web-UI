@@ -51,7 +51,7 @@
             <MudProgressCircular Color="Color.Success" Indeterminate="isLoading" Size="Size.Small" />
             <MudText Typo="Typo.caption" Class="ml-2">Ожидание данных от веб сервера...</MudText>
         }
-        <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-16">Температура стержней реактора</MudText>
+        <MudText Typo="Typo.h5" Align="Align.Center" Class="mt-16">Температура топлива реактора</MudText>
         <MudChart ChartType="ChartType.HeatMap" ChartSeries="@_seriesСoreTemp" ChartOptions="@_option"
                   ChartLabels="@_xlabels" Width="100%" Height="380px">
             <MudHeatMapCell Row="0" Column="0" MinValue="140" MaxValue="430" />
@@ -83,7 +83,7 @@
 </MudStack>
 <MudPaper>
     <MudStack Row="true" Justify="Justify.SpaceEvenly">
-        <MudStack>
+        <MudStack AlignItems="AlignItems.Center">
             <AnalogGauge Value="@AVGFissionable" MinValue="0" MaxValue="100" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
             <MudText Align="Align.Center">Средняя прочность топлива</MudText>
         </MudStack>
@@ -91,9 +91,21 @@
             <AnalogGauge Value="@AVGPowerFactor" MinValue="0" MaxValue="100" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
             <MudText Align="Align.Center">Средняя эффективность выработки тепла</MudText>
         </MudStack>
-        <MudStack>
+        <MudStack AlignItems="AlignItems.Center">
             <AnalogGauge Value="@AVGTemp" MinValue="0" MaxValue="700" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
             <MudText Align="Align.Center">Средняя температура топлива</MudText>
+        </MudStack>
+    </MudStack>
+</MudPaper>
+<MudPaper>
+    <MudStack Row="true" Justify="Justify.SpaceEvenly">
+        <MudStack AlignItems="AlignItems.Center">
+            <AnalogGauge Value="@coreIntegrity" MinValue="0" MaxValue="100" StartAngle="210" EndAngel="240" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
+            <MudText Align="Align.Center">Целостность ядра</MudText>
+        </MudStack>
+        <MudStack AlignItems="AlignItems.Center">
+            <AnalogGauge Value="@corePressure" MinValue="0" MaxValue="320" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
+            <MudText Align="Align.Center">Давление внутри ядра</MudText>
         </MudStack>
     </MudStack>
 </MudPaper>
@@ -112,7 +124,9 @@
     private double AVGFissionable;
     private double AVGPowerFactor;
     private double AVGTemp;
-
+    private double coreIntegrity;
+    private double corePressure;
+    private double s;
     private CancellationTokenSource _cts = new();
 
     protected override void OnInitialized()
@@ -168,6 +182,8 @@
         AVGFissionable = Convert.ToDouble(data["CORE_FUEL_AVG_FISSIONABLE"]);
         AVGPowerFactor = Convert.ToDouble(data["CORE_FUEL_AVG_POWER_FACTOR"]);
         AVGTemp = Convert.ToDouble(data["CORE_FUEL_AVG_TEMPERATURE"]);
+        coreIntegrity = Convert.ToDouble(data["CORE_INTEGRITY"]);
+        corePressure = Convert.ToDouble(data["CORE_PRESSURE"]);
     }
 
     public void HeatMapDataSet()
