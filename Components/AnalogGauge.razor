@@ -1,8 +1,8 @@
 ﻿<div style="width: @Size; height: @Size; position: relative; display: inline-block;">
     <svg viewBox="0 0 200 200" style="width: 100%; height: 100%;">
         @* Циферблат *@
-        <circle cx="100" cy="100" r="95" fill="@BackgroundColor" stroke="@BorderColor" stroke-width="4" image-rendering="auto" src="A:\ss\testIcon.jpg" />
-        
+        <circle cx="100" cy="100" r="95" fill="url(@BackgroundColor)" stroke="@BorderColor" stroke-width="4" image-rendering="auto" />
+        <image href="@ImageBase64"x="10" y="10" width="100" height="100" preserveAspectRatio="xMidYMid slice" />
         @* Метки *@
         @for (int i = 0; i < TickCount + 1; i++)
         {
@@ -12,10 +12,10 @@
             var y1 = 100 + 80 * Math.Sin(rad);
             var x2 = 100 + 90 * Math.Cos(rad);
             var y2 = 100 + 90 * Math.Sin(rad);
-            
+
             <line x1="@x1" y1="@y1" x2="@x2" y2="@y2" stroke="@TickColor" stroke-width="3" />
         }
-        
+
         @* Стрелка *@
         @{
             var percentage = Math.Clamp((double)(Value - MinValue) / (MaxValue - MinValue), 0, 1);
@@ -25,12 +25,12 @@
             var valueY = 100 + 75 * Math.Sin(valueRad);
         }
         <line x1="100" y1="100" x2="@valueX" y2="@valueY" 
-              stroke="@NeedleColor" stroke-width="4" stroke-linecap="round" />
-        
+        stroke="@NeedleColor" stroke-width="4" stroke-linecap="round" />
+
         @* Центр *@
         <circle cx="100" cy="100" r="8" fill="@NeedleColor" />
     </svg>
-    
+
     @* Значение в центре *@
     <div style="position: absolute; bottom: @PosTextY%; left: @PosTextX%; transform: translateX(-50%); text-align: center;">
         @{
@@ -57,7 +57,7 @@
 
     [Parameter] public string Size { get; set; } = "200px";             // Default "200px"
     [Parameter] public int TickCount { get; set; } = 12;                // Default "12"
-    
+
     [Parameter] public string BackgroundColor { get; set; } = "#1a1a1a";// Default "#1a1a1a"
     [Parameter] public string BorderColor { get; set; } = "#333";       // Default "#333"
     [Parameter] public string TickColor { get; set; } = "#fff";         // Default "#fff"
@@ -66,4 +66,6 @@
     [Parameter] public MudBlazor.Typo TextTypo { get; set; } = Typo.h4; // Default Typo.h4
     [Parameter] public int PosTextY { get; set; } = 30;                 // Default 30
     [Parameter] public int PosTextX { get; set; } = 50;                 // Default 50
+
+    [Parameter] public string ImageBase64 { get; set; }
 }

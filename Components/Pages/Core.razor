@@ -81,6 +81,22 @@
         </MudChart>
     </MudPaper>
 </MudStack>
+<MudPaper>
+    <MudStack Row="true" Justify="Justify.SpaceEvenly">
+        <MudStack>
+            <AnalogGauge Value="@AVGFissionable" MinValue="0" MaxValue="100" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
+            <MudText Align="Align.Center">Средняя прочность топлива</MudText>
+        </MudStack>
+        <MudStack AlignItems="AlignItems.Center">
+            <AnalogGauge Value="@AVGPowerFactor" MinValue="0" MaxValue="100" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
+            <MudText Align="Align.Center">Средняя эффективность выработки тепла</MudText>
+        </MudStack>
+        <MudStack>
+            <AnalogGauge Value="@AVGTemp" MinValue="0" MaxValue="700" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
+            <MudText Align="Align.Center">Средняя температура топлива</MudText>
+        </MudStack>
+    </MudStack>
+</MudPaper>
 
 @code {
     private bool isLoading = true;
@@ -92,6 +108,10 @@
     private List<ChartSeries<double>> _seriesPosBank = new List<ChartSeries<double>>();
     private List<ChartSeries<double>> _seriesFuelWear = new List<ChartSeries<double>>();
     private List<ChartSeries<double>> _seriesGenerationHeatEfficiency = new List<ChartSeries<double>>();
+
+    private double AVGFissionable;
+    private double AVGPowerFactor;
+    private double AVGTemp;
 
     private CancellationTokenSource _cts = new();
 
@@ -119,6 +139,7 @@
             {
 
                 HeatMapDataSet();
+                AnalogGaugeDataSet();
 
                 // Обязательно уведомляем UI об изменениях
                 await InvokeAsync(StateHasChanged);
@@ -138,6 +159,15 @@
     {
         _cts.Cancel();
         _cts.Dispose();
+    }
+
+    public void AnalogGaugeDataSet()
+    {
+        var data = new Dictionary<string, string>();
+        data = NuclearesGETData.Programs.Second();
+        AVGFissionable = Convert.ToDouble(data["CORE_FUEL_AVG_FISSIONABLE"]);
+        AVGPowerFactor = Convert.ToDouble(data["CORE_FUEL_AVG_POWER_FACTOR"]);
+        AVGTemp = Convert.ToDouble(data["CORE_FUEL_AVG_TEMPERATURE"]);
     }
 
     public void HeatMapDataSet()
