@@ -39,37 +39,174 @@
         }
         <MudText Typo="@TextTypo" Style="@textStyle">@Value.ToString(Format)</MudText>
 
-        @if (!string.IsNullOrEmpty(Unit))
+        @if (!string.IsNullOrEmpty(Text))
         {
             var unitStyle = $"color: {TextColor};";
-            <MudText Typo="Typo.caption" Style="@unitStyle">@Unit</MudText>
+            <MudText Typo="Typo.caption" Style="@unitStyle">@Text</MudText>
         }
     </div>
 </div>
 
 @code {
+    /// <summary>
+    /// Значение double для отображения на циферблате и стрелки
+    /// </summary>
     [Parameter] public double Value { get; set; }
-    [Parameter] public double MinValue { get; set; } = 0;               // Default 0
-    [Parameter] public double MaxValue { get; set; } = 100;             // Default 100
-    [Parameter] public string Unit { get; set; } = "";                  // Default ""
-    [Parameter] public string Format { get; set; } = "F0";              // Default "F0"
-    [Parameter] public int EndAngel { get; set; } = 360;                // Default 360
-    [Parameter] public int StartAngle { get; set; } = 90;               // Default 90
 
-    [Parameter] public string Size { get; set; } = "200px";             // Default "200px"
-    [Parameter] public int TickCount { get; set; } = 12;                // Default "12"
+    /// <summary>
+    /// Минимальное значение для стрелки
+    /// </summary>
+    /// <remarks>
+    /// Default = 0
+    /// </remarks>
+    [Parameter] public double MinValue { get; set; } = 0;
 
-    [Parameter] public string BackgroundColor { get; set; } = "#1a1a1a";// Default "#1a1a1a"
-    [Parameter] public string BorderColor { get; set; } = "#333333";    // Default "#333333"
-    [Parameter] public string TickColor { get; set; } = "#ffffff";      // Default "#ffffff"
-    [Parameter] public string NeedleColor { get; set; } = "#ff4444";    // Default "#ff4444"
-    [Parameter] public string TextColor { get; set; } = "#ffffff";      // Default "#ffffff"
-    [Parameter] public MudBlazor.Typo TextTypo { get; set; } = Typo.h4; // Default Typo.h4
-    [Parameter] public int PosTextY { get; set; } = 30;                 // Default 30
-    [Parameter] public int PosTextX { get; set; } = 50;                 // Default 50
-    [Parameter] public string SizeImage { get; set; } = "100%";         // Default 100%
+    /// <summary>
+    /// Максимальное значение для стрелки
+    /// </summary>
+    /// <remarks>
+    /// Default = 100
+    /// </remarks>
+    [Parameter] public double MaxValue { get; set; } = 100;
 
+    /// <summary>
+    /// Текст под значением value
+    /// </summary>
+    /// <remarks>
+    /// Default = ""
+    /// </remarks>
+    [Parameter] public string Text { get; set; } = "";
+
+    /// <summary>
+    /// Количество цифр после запетой в формате F0 - F1 - F2 - F3
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = "F0"</para>
+    /// <para>Min -> F0 || Max -> F3</para>
+    /// </remarks>
+    [Parameter] public string Format { get; set; } = "F0";
+
+    /// <summary>
+    /// Конечный угол для отображения рисок на круге и конечная позиция для стрелки
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = 360</para>
+    /// </remarks>
+    [Parameter] public int EndAngel { get; set; } = 360;
+
+    /// <summary>
+    /// Стартовый угол для отображения рисок на круге и стартовая позиция для стрелки
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = 90</para>
+    /// </remarks>
+    [Parameter] public int StartAngle { get; set; } = 90;
+
+    /// <summary>
+    /// Размер всего циферблата
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = "200px"</para>
+    /// <para>Принимает или px или %</para>
+    /// </remarks>
+    [Parameter] public string Size { get; set; } = "200px";
+
+    /// <summary>
+    /// Количество рисок на циферблате
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = 12</para>
+    /// </remarks>
+    [Parameter] public int TickCount { get; set; } = 12; 
+
+    /// <summary>
+    /// Цвет фона циферблата в hex формате
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = "#1a1a1a" (серый)</para>
+    /// </remarks>
+    [Parameter] public string BackgroundColor { get; set; } = "#1a1a1a";
+
+    /// <summary>
+    /// Цвет границы/обода циферблата в hex формате
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = "#333333" (светло серый)</para>
+    /// </remarks>
+    [Parameter] public string BorderColor { get; set; } = "#333333";
+
+    /// <summary>
+    /// Цвет рисок циферблата в hex формате
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = "#ffffff" (белый)</para>
+    /// </remarks>
+    [Parameter] public string TickColor { get; set; } = "#ffffff";
+
+    /// <summary>
+    /// Цвет стрелки циферблата в hex формате
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = "#ff4444" (красный)</para>
+    /// </remarks>
+    [Parameter] public string NeedleColor { get; set; } = "#ff4444";
+
+    /// <summary>
+    /// Цвет текста циферблата в hex формате
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = "#ffffff" (белый)</para>
+    /// </remarks>
+    [Parameter] public string TextColor { get; set; } = "#ffffff";
+
+    /// <summary>
+    /// Тип выводимого текста через MudBlazor.Typo
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = Typo.h4</para>
+    /// </remarks>
+    [Parameter] public MudBlazor.Typo TextTypo { get; set; } = Typo.h4;
+
+    /// <summary>
+    /// Позиция текста по Y (высоте)
+    /// </summary>
+    /// <remarks>
+    /// <para>Не относительно центра!!!!</para>
+    /// <para>Default = 30</para>
+    /// </remarks>
+    [Parameter] public int PosTextY { get; set; } = 30;
+
+    /// <summary>
+    /// Позиция текста по X (ширине)
+    /// </summary>
+    /// <remarks>
+    /// <para>Не относительно центра!!!!</para>
+    /// <para>Default = 50</para>
+    /// </remarks>
+    [Parameter] public int PosTextX { get; set; } = 50;
+
+    /// <summary>
+    /// Размер картинки относительно циферблата
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = "100%"</para>
+    /// </remarks>
+    [Parameter] public string SizeImage { get; set; } = "100%";
+
+    /// <summary>
+    /// Картинка в формате Base64
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = "100%"</para>
+    /// </remarks>
     [Parameter] public string ImageBase64 { get; set; }
-    [Parameter] public bool bDrowTick { get; set; } = true;             //Default true
+
+    /// <summary>
+    /// Параметр для создания рисок на циферблате
+    /// </summary>
+    /// <remarks>
+    /// <para>Default = bool true</para>
+    /// </remarks>
+    [Parameter] public bool bDrowTick { get; set; } = true;
 
 }
