@@ -84,27 +84,27 @@
 <MudPaper>
     <MudStack Row="true" Justify="Justify.SpaceEvenly">
         <MudStack AlignItems="AlignItems.Center">
-            <AnalogGauge Value="@AVGFissionable" MinValue="0" MaxValue="100" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
+            <AnalogGauge Value="@AVGFissionable" bDrowTick="true" MinValue="0" MaxValue="100" StartAngle="180" EndAngel="180" Format="F2" TextTypo="Typo.h5" PosTextY="29" GaugeType="Semicircle"></AnalogGauge>
             <MudText Align="Align.Center">Средняя прочность топлива</MudText>
         </MudStack>
         <MudStack AlignItems="AlignItems.Center">
-            <AnalogGauge Value="@AVGPowerFactor" MinValue="0" MaxValue="100" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
+            <AnalogGauge Value="@AVGPowerFactor" MinValue="0" MaxValue="100" StartAngle="180" EndAngel="180" Format="F2" TextTypo="Typo.h5" PosTextY="29" GaugeType="Semicircle"></AnalogGauge>
             <MudText Align="Align.Center">Средняя эффективность выработки тепла</MudText>
         </MudStack>
         <MudStack AlignItems="AlignItems.Center">
-            <AnalogGauge Value="@AVGTemp" MinValue="0" MaxValue="700" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
-            <MudText Align="Align.Center">Средняя температура топлива</MudText>
+            <AnalogGauge Value="@coreIntegrity" MinValue="0" MaxValue="100" StartAngle="180" EndAngel="180" TextTypo="Typo.h5" PosTextY="29" GaugeType="Semicircle"></AnalogGauge>
+            <MudText Align="Align.Center">Целостность ядра</MudText>
         </MudStack>
     </MudStack>
 </MudPaper>
 <MudPaper>
     <MudStack Row="true" Justify="Justify.SpaceEvenly">
         <MudStack AlignItems="AlignItems.Center">
-            <AnalogGauge Value="@coreIntegrity" MinValue="0" MaxValue="100" StartAngle="210" EndAngel="240" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
-            <MudText Align="Align.Center">Целостность ядра</MudText>
+            <AnalogGauge Value="@AVGTemp" MinValue="0" MaxValue="700" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10" ImageBase64="@image" bDrowTick="false" SizeImage="104%" PosImageX="-3" PosImageY="-5"></AnalogGauge>
+            <MudText Align="Align.Center">Средняя температура топлива</MudText>
         </MudStack>
         <MudStack AlignItems="AlignItems.Center">
-            <AnalogGauge Value="@corePressure" MinValue="0" MaxValue="320" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10"></AnalogGauge>
+            <AnalogGauge Value="@corePressure" MinValue="0" MaxValue="320" StartAngle="210" EndAngel="240" Format="F2" TextTypo="Typo.h5" PosTextY="10" ImageBase64="@image" bDrowTick="false" SizeImage="104%" PosImageX="-3" PosImageY="-5"></AnalogGauge>
             <MudText Align="Align.Center">Давление внутри ядра</MudText>
         </MudStack>
     </MudStack>
@@ -126,7 +126,8 @@
     private double AVGTemp;
     private double coreIntegrity;
     private double corePressure;
-    private double s;
+    public string image = "";
+
     private CancellationTokenSource _cts = new();
 
     protected override void OnInitialized()
@@ -134,6 +135,7 @@
         // Запускаем фоновую задачу без ожидания (fire-and-forget)
         _ = BackgroundLoop(_cts.Token);
         BuildOptions();
+        image = Components.Helper.ConverterImageToBase64(@"Content/Image/Dial1.png");
     }
 
     private void BuildOptions()
