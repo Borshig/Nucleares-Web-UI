@@ -1,214 +1,103 @@
 ﻿@page "/energyProduction"
 @rendermode InteractiveServer
 
+@if (isLoading)
+{
+    <MudProgressCircular Color="Color.Success" Indeterminate="isLoading" Size="Size.Small" />
+    <MudText Typo="Typo.caption" Class="ml-2">Ожидание данных от веб сервера...</MudText>
+}
+
 <MudGrid Spacing="3">
     <MudItem xs="2">
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkred" >
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="@gen1_1W" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="4" Value="@gen1W" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="4" Value="@gen1RPM" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkgreen">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="5" Value="@gen1V" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkblue">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="3" Value="@gen1Hz" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="5" Value="@gen1A" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
     </MudItem>
     <MudItem xs="2">
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkred">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="4" Value="@gen2W" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="4" Value="@gen2RPM" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkgreen">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="5" Value="@gen2V" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkblue">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="3" Value="@gen2Hz" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="5" Value="@gen2A" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
     </MudItem>
     <MudItem xs="2">
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkred">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="@gen3_1W" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="@gen3_2W" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="@gen3_3W" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="@gen3_4W" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="4" Value="@gen3W" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="4" Value="@gen3RPM" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkgreen">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="5" Value="@gen3V" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkblue">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="3" Value="@gen3Hz" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="5" Value="@gen3A" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
     </MudItem>
     <MudItem xs="2">
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkred">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="4" Value="@busW" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="4" Value="@busRPM" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkgreen">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="5" Value="@busV" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
         <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkblue">
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
-            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Digits="3" Value="@busHz" SegmentOffColor="#3e3d42" SegmentColor="#F9F9F9"></SevenSegmentDisplay>
         </MudPaper>
     </MudItem>
 </MudGrid>
 
 @code {
-    private int gen1_1W;
-    private int gen1_2W;
-    private int gen1_3W;
-    private int gen1_4W;
-    private int gen2_1W;
-    private int gen2_2W;
-    private int gen2_3W;
-    private int gen2_4W;
-    private int gen3_1W;
-    private int gen3_2W;
-    private int gen3_3W;
-    private int gen3_4W;
-    private int gen1_1RPM;
-    private int gen1_2RPM;
-    private int gen1_3RPM;
-    private int gen1_4RPM;
-    private int gen2_1RPM;
-    private int gen2_2RPM;
-    private int gen2_3RPM;
-    private int gen2_4RPM;
-    private int gen3_1RPM;
-    private int gen3_2RPM;
-    private int gen3_3RPM;
-    private int gen3_4RPM;
-    private int gen1_1V;
-    private int gen1_2V;
-    private int gen1_3V;
-    private int gen1_4V;
-    private int gen1_5V;
-    private int gen2_1V;
-    private int gen2_2V;
-    private int gen2_3V;
-    private int gen2_4V;
-    private int gen2_5V;
-    private int gen3_1V;
-    private int gen3_2V;
-    private int gen3_3V;
-    private int gen3_4V;
-    private int gen3_5V;
-    private int gen1_1Hz;
-    private int gen1_2Hz;
-    private int gen1_3Hz;
-    private int gen2_1Hz;
-    private int gen2_2Hz;
-    private int gen2_3Hz;
-    private int gen3_1Hz;
-    private int gen3_2Hz;
-    private int gen3_3Hz;
-    private int gen1_1A;
-    private int gen1_2A;
-    private int gen1_3A;
-    private int gen1_4A;
-    private int gen1_5A;
-    private int gen2_1A;
-    private int gen2_2A;
-    private int gen2_3A;
-    private int gen2_4A;
-    private int gen2_5A;
-    private int gen3_1A;
-    private int gen3_2A;
-    private int gen3_3A;
-    private int gen3_4A;
-    private int gen3_5A;
-    private int bus_1W;
-    private int bus_2W;
-    private int bus_3W;
-    private int bus_4W;
-    private int bus_1RPM;
-    private int bus_2RPM;
-    private int bus_3RPM;
-    private int bus_4RPM;
-    private int bus_1V;
-    private int bus_2V;
-    private int bus_3V;
-    private int bus_4V;
-    private int bus_5V;
-    private int bus_1Hz;
-    private int bus_2Hz;
-    private int bus_3Hz;
+    private bool isLoading = true;
+
+    private string gen1W = "";
+    private string gen2W = "";
+    private string gen3W = "";
+    private string gen1RPM = "";
+    private string gen2RPM = "";
+    private string gen3RPM = "";
+    private string gen1V = "";
+    private string gen2V = "";
+    private string gen3V = "";
+    private string gen1Hz = "";
+    private string gen2Hz = "";
+    private string gen3Hz = "";
+    private string gen1A = "";
+    private string gen2A = "";
+    private string gen3A = "";
+
+    private string busW = "";
+    private string busRPM = "0000";
+    private string busV = "22000";
+    private string busHz = "50";
 
     private CancellationTokenSource _cts = new();
 
@@ -226,7 +115,6 @@
             while (!ct.IsCancellationRequested)
             {
                 DataSetDisplay();
-
                 // Обязательно уведомляем UI об изменениях
                 await InvokeAsync(StateHasChanged);
 
@@ -247,40 +135,47 @@
         _cts.Dispose();
     }
 
-    public void DataSetDisplay()
+    public async void DataSetDisplay()
     {
         var data = new Dictionary<string, string>();
-        data = NuclearesGETData.Programs.Second();
+        data = await NuclearesGETData.Programs.Second();
 
-        int gen1W = Convert.ToInt32(data["GENERATOR_0_KW"]);
-        int gen2W = Convert.ToInt32(data["GENERATOR_1_KW"]);
-        int gen3W = (int)Math.Round(Convert.ToDouble(data["GENERATOR_2_KW"]));
-        int gen1RPM = Convert.ToInt32(data["STEAM_TURBINE_0_RPM"]);
-        int gen2RPM = Convert.ToInt32(data["STEAM_TURBINE_1_RPM"]);
-        int gen3RPM = Convert.ToInt32(data["STEAM_TURBINE_2_RPM"]);
-        int gen1V = Convert.ToInt32(data["GENERATOR_0_V"]);
-        int gen2V = Convert.ToInt32(data["GENERATOR_1_V"]);
-        /*int gen3V = Convert.ToInt32(data["GENERATOR_2_V"]);
-        int gen1Hz = Convert.ToInt32(data["GENERATOR_0_HERTZ"]);
-        int gen2Hz = Convert.ToInt32(data["GENERATOR_1_HERTZ"]);
-        int gen3Hz = Convert.ToInt32(data["GENERATOR_2_HERTZ"]);
-        int gen1A = Convert.ToInt32(data["GENERATOR_0_A"]);
-        int gen2A = Convert.ToInt32(data["GENERATOR_1_A"]);
-        int gen3A = Convert.ToInt32(data["GENERATOR_2_A"]);*/
-        int busW; 
-        int busRPM;
-        int busV;
-        int busHz;
-        int[] gen = new int[4];
-        for (int i = 0; i < 3; i++)
+        if (data.Count == 0)
         {
-            int b = 1;
-            gen[i] = Convert.ToInt32(gen3W.ToString().Substring(i, b));
-            b++;
+            isLoading = true;
+            return;
         }
-        gen3_1W = gen[0];
-        gen3_2W = gen[1];
-        gen3_3W = gen[2];
-        gen3_4W = gen[3];
+        isLoading = false;
+
+        int igen1W = Convert.ToInt32(data["GENERATOR_0_KW"]);
+        int igen2W = Convert.ToInt32(data["GENERATOR_1_KW"]);
+        int igen3W = (int)Math.Round(Convert.ToDouble(data["GENERATOR_2_KW"]));
+        int igen1Hz = (int)Math.Round(Convert.ToDouble(data["GENERATOR_0_HERTZ"]));
+        int igen2Hz = (int)Math.Round(Convert.ToDouble(data["GENERATOR_1_HERTZ"]));
+        int igen3Hz = (int)Math.Round(Convert.ToDouble(data["GENERATOR_2_HERTZ"])); 
+        int igen1A = (int)Math.Round(Convert.ToDouble(data["GENERATOR_0_A"]));
+        int igen2A = (int)Math.Round(Convert.ToDouble(data["GENERATOR_1_A"]));
+        int igen3A = (int)Math.Round(Convert.ToDouble(data["GENERATOR_2_A"]));
+        //int busRPM;
+        //int busV;
+        //int busHz;
+
+        gen1W = igen1W.ToString().Length <= 4 ? Convert.ToString(igen1W) : Convert.ToString(igen1W / 1000);
+        gen2W = igen2W.ToString().Length <= 4 ? Convert.ToString(igen2W) : Convert.ToString(igen2W / 1000);
+        gen3W = igen3W.ToString().Length <= 4 ? Convert.ToString(igen3W) : Convert.ToString(igen3W / 1000);
+        gen1RPM = data["STEAM_TURBINE_0_RPM"];
+        gen2RPM = data["STEAM_TURBINE_1_RPM"];
+        gen3RPM = data["STEAM_TURBINE_2_RPM"];
+        gen1V = data["GENERATOR_0_V"];
+        gen2V = data["GENERATOR_1_V"];
+        gen3V = data["GENERATOR_2_V"];
+        gen1Hz = Convert.ToString(igen1Hz);
+        gen2Hz = Convert.ToString(igen2Hz);
+        gen3Hz = Convert.ToString(igen3Hz);
+        gen1A = Convert.ToString(igen1A);
+        gen2A = Convert.ToString(igen2A);
+        gen3A = Convert.ToString(igen3A);
+
+        busW = Convert.ToString((int)Math.Round(Convert.ToDouble(data["POWER_DEMAND_MW"])));
     }
 }
