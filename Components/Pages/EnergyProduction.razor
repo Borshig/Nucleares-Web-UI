@@ -1,0 +1,286 @@
+﻿@page "/energyProduction"
+@rendermode InteractiveServer
+
+<MudGrid Spacing="3">
+    <MudItem xs="2">
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkred" >
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="@gen1_1W" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkgreen">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkblue">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="2">
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkred">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkgreen">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkblue">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="2">
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkred">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="@gen3_1W" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="@gen3_2W" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="@gen3_3W" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="@gen3_4W" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkgreen">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkblue">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black" >
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="2">
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkred">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: black">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkgreen">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+        <MudPaper Class="d-flex align-center justify-center py-4" style="background-color: darkblue">
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+            <SevenSegmentDisplay Size="8%" ActiveColor="#fff" Digit="0" bLight="false"></SevenSegmentDisplay>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private int gen1_1W;
+    private int gen1_2W;
+    private int gen1_3W;
+    private int gen1_4W;
+    private int gen2_1W;
+    private int gen2_2W;
+    private int gen2_3W;
+    private int gen2_4W;
+    private int gen3_1W;
+    private int gen3_2W;
+    private int gen3_3W;
+    private int gen3_4W;
+    private int gen1_1RPM;
+    private int gen1_2RPM;
+    private int gen1_3RPM;
+    private int gen1_4RPM;
+    private int gen2_1RPM;
+    private int gen2_2RPM;
+    private int gen2_3RPM;
+    private int gen2_4RPM;
+    private int gen3_1RPM;
+    private int gen3_2RPM;
+    private int gen3_3RPM;
+    private int gen3_4RPM;
+    private int gen1_1V;
+    private int gen1_2V;
+    private int gen1_3V;
+    private int gen1_4V;
+    private int gen1_5V;
+    private int gen2_1V;
+    private int gen2_2V;
+    private int gen2_3V;
+    private int gen2_4V;
+    private int gen2_5V;
+    private int gen3_1V;
+    private int gen3_2V;
+    private int gen3_3V;
+    private int gen3_4V;
+    private int gen3_5V;
+    private int gen1_1Hz;
+    private int gen1_2Hz;
+    private int gen1_3Hz;
+    private int gen2_1Hz;
+    private int gen2_2Hz;
+    private int gen2_3Hz;
+    private int gen3_1Hz;
+    private int gen3_2Hz;
+    private int gen3_3Hz;
+    private int gen1_1A;
+    private int gen1_2A;
+    private int gen1_3A;
+    private int gen1_4A;
+    private int gen1_5A;
+    private int gen2_1A;
+    private int gen2_2A;
+    private int gen2_3A;
+    private int gen2_4A;
+    private int gen2_5A;
+    private int gen3_1A;
+    private int gen3_2A;
+    private int gen3_3A;
+    private int gen3_4A;
+    private int gen3_5A;
+    private int bus_1W;
+    private int bus_2W;
+    private int bus_3W;
+    private int bus_4W;
+    private int bus_1RPM;
+    private int bus_2RPM;
+    private int bus_3RPM;
+    private int bus_4RPM;
+    private int bus_1V;
+    private int bus_2V;
+    private int bus_3V;
+    private int bus_4V;
+    private int bus_5V;
+    private int bus_1Hz;
+    private int bus_2Hz;
+    private int bus_3Hz;
+
+    private CancellationTokenSource _cts = new();
+
+    protected override void OnInitialized()
+    {
+        // Запускаем фоновую задачу без ожидания (fire-and-forget)
+        _ = BackgroundLoop(_cts.Token);
+        DataSetDisplay();
+    }
+
+    private async Task BackgroundLoop(CancellationToken ct)
+    {
+        try
+        {
+            while (!ct.IsCancellationRequested)
+            {
+                DataSetDisplay();
+
+                // Обязательно уведомляем UI об изменениях
+                await InvokeAsync(StateHasChanged);
+
+                // Задержка, чтобы не вешать поток
+                await Task.Delay(1000, ct);
+            }
+        }
+        catch (TaskCanceledException)
+        {
+            // Нормальное завершение при закрытии страницы
+        }
+    }
+
+    // Остановка цикла при уничтожении компонента
+    public void Dispose()
+    {
+        _cts.Cancel();
+        _cts.Dispose();
+    }
+
+    public void DataSetDisplay()
+    {
+        var data = new Dictionary<string, string>();
+        data = NuclearesGETData.Programs.Second();
+
+        int gen1W = Convert.ToInt32(data["GENERATOR_0_KW"]);
+        int gen2W = Convert.ToInt32(data["GENERATOR_1_KW"]);
+        int gen3W = (int)Math.Round(Convert.ToDouble(data["GENERATOR_2_KW"]));
+        int gen1RPM = Convert.ToInt32(data["STEAM_TURBINE_0_RPM"]);
+        int gen2RPM = Convert.ToInt32(data["STEAM_TURBINE_1_RPM"]);
+        int gen3RPM = Convert.ToInt32(data["STEAM_TURBINE_2_RPM"]);
+        int gen1V = Convert.ToInt32(data["GENERATOR_0_V"]);
+        int gen2V = Convert.ToInt32(data["GENERATOR_1_V"]);
+        /*int gen3V = Convert.ToInt32(data["GENERATOR_2_V"]);
+        int gen1Hz = Convert.ToInt32(data["GENERATOR_0_HERTZ"]);
+        int gen2Hz = Convert.ToInt32(data["GENERATOR_1_HERTZ"]);
+        int gen3Hz = Convert.ToInt32(data["GENERATOR_2_HERTZ"]);
+        int gen1A = Convert.ToInt32(data["GENERATOR_0_A"]);
+        int gen2A = Convert.ToInt32(data["GENERATOR_1_A"]);
+        int gen3A = Convert.ToInt32(data["GENERATOR_2_A"]);*/
+        int busW; 
+        int busRPM;
+        int busV;
+        int busHz;
+        int[] gen = new int[4];
+        for (int i = 0; i < 3; i++)
+        {
+            int b = 1;
+            gen[i] = Convert.ToInt32(gen3W.ToString().Substring(i, b));
+            b++;
+        }
+        gen3_1W = gen[0];
+        gen3_2W = gen[1];
+        gen3_3W = gen[2];
+        gen3_4W = gen[3];
+    }
+}
