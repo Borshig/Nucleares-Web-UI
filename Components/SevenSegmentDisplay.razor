@@ -1,0 +1,30 @@
+﻿<svg viewBox="0 0 50 100" width="@Size" height="@Size" style="filter: @(IsActive && bLight ? $"drop-shadow(0 0 3px {ActiveColor})" : "none"); transition: all 0.2s;">
+    <!-- Сегмент A (Верх) -->
+    <path d="M12 8 L48 8 L42 14 L18 14 Z" fill="@GetColor('a')" />
+    <!-- Сегмент F (Верх-лево) -->
+    <path d="M10 10 L16 16 L16 46 L10 52 Z" fill="@GetColor('f')" />
+    <!-- Сегмент B (Верх-право) -->
+    <path d="M50 10 L50 52 L44 46 L44 16 Z" fill="@GetColor('b')" />
+    <!-- Сегмент G (Центр) -->
+    <path d="M12 50 L18 44 L42 44 L48 50 L42 56 L18 56 Z" fill="@GetColor('g')" />
+    <!-- Сегмент E (Низ-лево) -->
+    <path d="M10 48 L16 54 L16 84 L10 90 Z" fill="@GetColor('e')" />
+    <!-- Сегмент C (Низ-право) -->
+    <path d="M50 48 L50 90 L44 84 L44 54 Z" fill="@GetColor('c')" />
+    <!-- Сегмент D (Низ) -->
+    <path d="M12 92 L18 86 L42 86 L48 92 Z" fill="@GetColor('d')" />
+</svg>
+
+@code {
+    [Parameter] public int Digit { get; set; } = ' ';
+    [Parameter] public string Size { get; set; } = "50px";
+    [Parameter] public string ActiveColor { get; set; } = "#FAFF00";
+    [Parameter] public string InactiveColor { get; set; } = "#2A2A2A";
+    [Parameter] public bool bLight { get; set; } = true;
+
+    private bool IsActive => Digit != ' ' && SegmentMap.ContainsKey(Digit);
+
+    private string GetColor(char segment) => SegmentMap.TryGetValue(Digit, out var segments) && segments.Contains(segment) ? ActiveColor : InactiveColor;
+
+    private static readonly Dictionary<int, string> SegmentMap = new() {{0, "abcdef"}, {1, "bc"}, {2, "abdeg"}, {3, "abcdg"}, {4, "bcfg"}, {5, "acdfg"}, {6, "acdefg"}, {7, "abc"}, {8, "abcdefg"}, {9, "abcdfg"}};
+}
