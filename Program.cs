@@ -46,7 +46,7 @@ namespace NuclearesGETData
 
 
 
-        public static Dictionary<string, string> Second()
+        public static async Task<Dictionary<string, string>>  Second()
         {
 
             var result = new Dictionary<string, string>();

@@ -177,10 +177,19 @@
         _cts.Dispose();
     }
 
-    public void AnalogGaugeDataSet()
+    public async void  AnalogGaugeDataSet()
     {
         var data = new Dictionary<string, string>();
-        data = NuclearesGETData.Programs.Second();
+        data = await NuclearesGETData.Programs.Second();
+
+        if (data.Count == 0)
+        {
+            isLoading = true;
+            return;
+        }
+
+        isLoading = false;
+
         AVGFissionable = Convert.ToDouble(data["CORE_FUEL_AVG_FISSIONABLE"]);
         AVGPowerFactor = Convert.ToDouble(data["CORE_FUEL_AVG_POWER_FACTOR"]);
         AVGTemp = Convert.ToDouble(data["CORE_FUEL_AVG_TEMPERATURE"]);
@@ -188,10 +197,10 @@
         corePressure = Convert.ToDouble(data["CORE_PRESSURE"]);
     }
 
-    public void HeatMapDataSet()
+    public async void HeatMapDataSet()
     {
         var data = new Dictionary<string, string>();
-        data = NuclearesGETData.Programs.Second();
+        data = await NuclearesGETData.Programs.Second();
 
         if (data.Count == 0)
         {
