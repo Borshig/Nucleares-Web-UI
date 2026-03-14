@@ -1,30 +1,124 @@
-﻿<svg viewBox="0 0 50 100" width="@Size" height="@Size" style="filter: @(IsActive && bLight ? $"drop-shadow(0 0 3px {ActiveColor})" : "none"); transition: all 0.2s;">
-    <!-- Сегмент A (Верх) -->
-    <path d="M12 8 L48 8 L42 14 L18 14 Z" fill="@GetColor('a')" />
-    <!-- Сегмент F (Верх-лево) -->
-    <path d="M10 10 L16 16 L16 46 L10 52 Z" fill="@GetColor('f')" />
-    <!-- Сегмент B (Верх-право) -->
-    <path d="M50 10 L50 52 L44 46 L44 16 Z" fill="@GetColor('b')" />
-    <!-- Сегмент G (Центр) -->
-    <path d="M12 50 L18 44 L42 44 L48 50 L42 56 L18 56 Z" fill="@GetColor('g')" />
-    <!-- Сегмент E (Низ-лево) -->
-    <path d="M10 48 L16 54 L16 84 L10 90 Z" fill="@GetColor('e')" />
-    <!-- Сегмент C (Низ-право) -->
-    <path d="M50 48 L50 90 L44 84 L44 54 Z" fill="@GetColor('c')" />
-    <!-- Сегмент D (Низ) -->
-    <path d="M12 92 L18 86 L42 86 L48 92 Z" fill="@GetColor('d')" />
+﻿<svg width="@(Digits * 45)" height="@Size" viewBox="0 0 @(Digits * 50) 100" style=" filter: @(bAllLight ? $"drop-shadow(0 0 3px {AllLightColor})" : "none"); transition: all 0.2s;">
+    
+    @for (int i = 0; i < Digits; i++)
+    {
+        var digit = GetDigit(i);
+        var xOffset = i * 45;
+
+        <!-- Сегмент A (Верх) -->
+        <path d="M@(xOffset + 12) 8 L@(xOffset + 48) 8  L@(xOffset + 42) 14 L@(xOffset + 18) 14 Z" style="fill: @(IsOn(digit, 0) ? @SegmentColor : @SegmentOffColor); filter: @(bSegmentLight && IsOn(digit, 0) ? $"drop-shadow(0 0 3px {SegmentLightColor})" : "none");" />
+        <!-- Сегмент F (Верх-лево) -->
+        <path d="M@(xOffset + 10) 10 L@(xOffset + 16) 16 L@(xOffset + 16) 46 L@(xOffset + 10) 52 Z" style=" fill: @(IsOn(digit, 5) ? @SegmentColor : @SegmentOffColor); filter: @(bSegmentLight && IsOn(digit, 5) ? $"drop-shadow(0 0 3px {SegmentLightColor})" : "none");"  />
+        <!-- Сегмент B (Верх-право) -->
+        <path d="M@(xOffset + 50) 10 L@(xOffset + 50) 52 L@(xOffset + 44) 46 L@(xOffset + 44) 16 Z" style="fill: @(IsOn(digit, 1) ? @SegmentColor : @SegmentOffColor); filter: @(bSegmentLight && IsOn(digit, 1) ? $"drop-shadow(0 0 3px {SegmentLightColor})" : "none");" />
+        <!-- Сегмент G (Центр) -->
+        <path d="M@(xOffset + 12) 50 L@(xOffset + 18) 44 L@(xOffset + 42) 44 L@(xOffset + 48) 50 L@(xOffset + 42) 56 L@(xOffset + 18) 56 Z" style="fill: @(IsOn(digit, 6) ? @SegmentColor : @SegmentOffColor); filter: @(bSegmentLight && IsOn(digit, 6) ? $"drop-shadow(0 0 3px {SegmentLightColor})" : "none");" />
+        <!-- Сегмент E (Низ-лево) -->
+        <path d="M@(xOffset + 10) 48 L@(xOffset + 16) 54 L@(xOffset + 16) 84 L@(xOffset + 10) 90 Z" style="fill: @(IsOn(digit, 4) ? @SegmentColor : @SegmentOffColor); filter: @(bSegmentLight && IsOn(digit, 4) ? $"drop-shadow(0 0 3px {SegmentLightColor})" : "none");" />
+        <!-- Сегмент C (Низ-право) -->
+        <path d="M@(xOffset + 50) 48 L@(xOffset + 50) 90 L@(xOffset + 44) 84 L@(xOffset + 44) 54 Z" style="fill: @(IsOn(digit, 2) ? @SegmentColor : @SegmentOffColor); filter: @(bSegmentLight && IsOn(digit, 2) ? $"drop-shadow(0 0 3px {SegmentLightColor})" : "none");" />
+        <!-- Сегмент D (Низ) -->
+        <path d="M@(xOffset + 12) 92 L@(xOffset + 18) 86 L@(xOffset + 42) 86 L@(xOffset + 48) 92 Z" style="fill: @(IsOn(digit, 3) ? @SegmentColor : @SegmentOffColor); filter: @(bSegmentLight && IsOn(digit, 3) ? $"drop-shadow(0 0 3px {SegmentLightColor})" : "none");" />
+    }
 </svg>
 
 @code {
-    [Parameter] public int Digit { get; set; } = ' ';
+    /// <summary>
+    /// Размер сими сигментного индикатора
+    /// </summary>
+    /// <remarks>
+    /// Default = 50px
+    /// </remarks>
     [Parameter] public string Size { get; set; } = "50px";
-    [Parameter] public string ActiveColor { get; set; } = "#FAFF00";
-    [Parameter] public string InactiveColor { get; set; } = "#2A2A2A";
-    [Parameter] public bool bLight { get; set; } = true;
 
-    private bool IsActive => Digit != ' ' && SegmentMap.ContainsKey(Digit);
+    /// <summary>
+    /// Значение для индикатора
+    /// </summary>
+    /// <remarks>
+    /// Default = " "
+    /// </remarks>
+    [Parameter] public string Value { get; set; } = " ";
 
-    private string GetColor(char segment) => SegmentMap.TryGetValue(Digit, out var segments) && segments.Contains(segment) ? ActiveColor : InactiveColor;
+    /// <summary>
+    /// Количество индикаторов и количество принимаемых цифр
+    /// </summary>
+    /// <remarks>
+    /// Default = 1
+    /// </remarks>
+    [Parameter] public int Digits { get; set; } = 1;
 
-    private static readonly Dictionary<int, string> SegmentMap = new() {{0, "abcdef"}, {1, "bc"}, {2, "abdeg"}, {3, "abcdg"}, {4, "bcfg"}, {5, "acdfg"}, {6, "acdefg"}, {7, "abc"}, {8, "abcdefg"}, {9, "abcdfg"}};
+    /// <summary>
+    /// Цвет активных сегментов
+    /// </summary>
+    /// <remarks>
+    /// Default = "#fff"
+    /// </remarks>
+    [Parameter] public string SegmentColor { get; set; } = "#fff";
+
+    /// <summary>
+    /// Цвет выключенных сегментов
+    /// </summary>
+    /// <remarks>
+    /// Default = "#000"
+    /// </remarks>
+    [Parameter] public string SegmentOffColor { get; set; } = "#000";
+
+    /// <summary>
+    /// Цвет подсветки сегментов
+    /// </summary>
+    /// <remarks>
+    /// Default = "#fff"
+    /// </remarks>
+    [Parameter] public string SegmentLightColor { get; set; } = "#fff";
+
+    /// <summary>
+    /// Цвет подсветки индикатора
+    /// </summary>
+    /// <remarks>
+    /// Default = "#fff"
+    /// </remarks>
+    [Parameter] public string AllLightColor { get; set; } = "#fff";
+
+    /// <summary>
+    /// Параметр для вкл/выкл подсветки  сегментов
+    /// </summary>
+    /// <remarks>
+    /// Default = false
+    /// </remarks>
+    [Parameter] public bool bSegmentLight { get; set; } = false;
+
+    /// <summary>
+    /// Параметр для вкл/выкл подсветки индикатора
+    /// </summary>
+    /// <remarks>
+    /// Default = false
+    /// </remarks>
+    [Parameter] public bool bAllLight { get; set; } = false;
+
+    private static readonly bool[][] Segments = new[]
+{
+        new[] { true, true, true, true, true, true, false },     // 0
+        new[] { false, true, true, false, false, false, false }, // 1
+        new[] { true, true, false, true, true, false, true },    // 2
+        new[] { true, true, true, true, false, false, true },    // 3
+        new[] { false, true, true, false, false, true, true },   // 4
+        new[] { true, false, true, true, false, true, true },    // 5
+        new[] { true, false, true, true, true, true, true },     // 6
+        new[] { true, true, true, false, false, false, false },  // 7
+        new[] { true, true, true, true, true, true, true },      // 8
+        new[] { true, true, true, true, false, true, true },     // 9
+        new[] { false, false, false, false, false, false, false }// Пробел
+    };
+
+    private char GetDigit(int index)
+    {
+        var str = Value?.PadLeft(Digits, ' ') ?? new string(' ', Digits);
+        return index < str.Length ? str[index] : ' ';
+    }
+
+    public bool IsOn(char digit, int segment)
+    {
+        int idx = digit switch {'0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8, '9' => 9, _ => 10};
+        return Segments[idx][segment];
+    }
 }
